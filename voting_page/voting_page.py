@@ -3,7 +3,7 @@ import csv
 import streamlit as st
 from PIL import Image
 
-images_dir = "images/"
+images_dir = "./images/"
 questions = []
 for idx, image_dir in enumerate(os.listdir(images_dir)):   
     image = Image.open(images_dir+image_dir)
