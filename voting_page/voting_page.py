@@ -4,7 +4,7 @@ import streamlit as st
 from pathlib import Path
 from PIL import Image
 
-image_folder = Path("images")
+image_folder = Path("voting_page/images")
 image_files = list(image_folder.glob('*'))
 questions = []
 for idx, image_dir in enumerate(image_files):   
@@ -14,6 +14,6 @@ for idx, image_dir in enumerate(image_files):
     questions.append(question)
 
 if st.button('submit'):
-    with open("./results/result.csv", mode='a', newline='') as file:
+    with open("voting_page/results/result.csv", mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerows([questions])
