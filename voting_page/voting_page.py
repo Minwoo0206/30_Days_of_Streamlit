@@ -3,32 +3,34 @@ import gspread
 import pandas as pd
 import streamlit as st
 from PIL import Image
-from rembg import remove
 
 st.header('ACP 프로토타입 그림 선별', divider='rainbow')
 
 # 설문조사 설명 부분
 st.subheader('설명 :sunglasses:')
-st.write('''
-        여러분은 앞으로 66장의 그림을 보게 될 것이며, 그림이 실제에 가까운지(real), 애니메이션에 가까운지(animatic) 평정할 것입니다.
-        그림이 실제에 가깝다면 0점에 가깝게, 애니메이션에 가깝다면 10점에 가깝게 평정해주세요.
+st.text('''
+        여러분은 앞으로 66장의 그림을 보게 될 것이며, 그림이 얼마나 기괴한지 평가할 것입니다.
+        그림이 전혀 기괴하지 않다면 1점을, 그림이 매우 기괴하다면 5점을 주세요.
+        
+        여러분이 보는 그림은 배경 제거 기능을 적용한 그림이므로, 외곽 번짐 혹은 사라짐 현상이 일부 있을 수 있습니다.
+        해당 효과는 신경쓰지 않고 평가해주시기 바랍니다.
         ''')
 
-try:
-    man_real = Image.open("explain/man_real.png")
-    man_anim = Image.open("explain/man_anim.png")
-except:
-    man_real = Image.open("voting_page/explain/man_real.png")
-    man_anim = Image.open("voting_page/explain/man_anim.png")
+# try:
+#     man_real = Image.open("explain/man_real.png")
+#     man_anim = Image.open("explain/man_anim.png")
+# except:
+#     man_real = Image.open("voting_page/explain/man_real.png")
+#     man_anim = Image.open("voting_page/explain/man_anim.png")
 
-st.write("0점은 왼쪽 그림을 기준으로, 10점은 오른쪽 그림을 기준으로 삼습니다.")
-col1, col2 = st.columns(2)
-with col1:
-    st.image(man_real, caption='실제', use_column_width=True)
-with col2:
-    st.image(man_anim, caption='애니메이션', use_column_width=True)
+# st.write("0점은 왼쪽 그림을 기준으로, 10점은 오른쪽 그림을 기준으로 삼습니다.")
+# col1, col2 = st.columns(2)
+# with col1:
+#     st.image(man_real, caption='실제', use_column_width=True)
+# with col2:
+#     st.image(man_anim, caption='애니메이션', use_column_width=True)
 
-st.write("이해가 다 되었다면 평정을 시작해주세요.")
+st.text("이해가 다 되었다면 평정을 시작해주세요.")
 
 # 평정 부분
 st.header(body="", divider="rainbow")
@@ -49,7 +51,7 @@ questions = []
 for idx, sample_dir in enumerate(samples_dir):
     sample = Image.open(sample_dir)
     st.image(sample)
-    question = st.slider(f"'real[0]' or 'animatic[10]'?(Q{idx+1})", 0, 10, 5)
+    question = st.slider(f"Q{idx+1}. **전혀 기괴하지 않다[1]** - **매우 기괴하다[5]** ({sample_dir.split('/')[-1]})", 1, 5, 3)
     questions.append(question)
 
 # connect gc
@@ -86,4 +88,4 @@ if submit:
         st.success("설문조사가 완료되었습니다.")
         st.balloons()
     else:
-        st.write("이름을 입력하세요.")
+        st.text("이름을 입력하세요.")
