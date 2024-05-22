@@ -2,3 +2,4 @@ pillow==10.3.0
 gspread
 pandas
 rembg
+streamlit_authenticator
