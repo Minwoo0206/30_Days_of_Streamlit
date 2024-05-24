@@ -3,4 +3,5 @@
 **/.DS_Store
 **/._.DS_Store
 
+Day29/dashboard_utils/__pycache__
 voting_page/.streamlit/secrets.toml
